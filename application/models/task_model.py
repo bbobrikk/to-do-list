@@ -15,6 +15,6 @@ class TaskORM(Base):
     created_at : Mapped[date]
 
     __table_args__ = (
-        CheckConstraint("status in ('done', 'completing')", "CHK_status_valid"),
+        CheckConstraint("status in ('done', 'running')", "CHK_status_valid"),
         CheckConstraint("deadline >= created_at", "CHK_date_valid")
     )
