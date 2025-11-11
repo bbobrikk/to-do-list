@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from application.repositories.task_repositories import get_task, add_task, get_tasks, del_task
-from application.shcemas.tasks_dto import CreateTask, ReadTask, BaseTask
+from application.repositories.task_repositories import get_task, add_task, get_tasks, del_task, change_status
+from application.shcemas.tasks_dto import CreateTask
 
 
 async def check_tasks(session : AsyncSession):
@@ -25,4 +25,11 @@ async def remove_task(session : AsyncSession, title : str):
     task = await get_task(session, title)
     if task:
         await del_task(session, title)
-    raise ValueError("Задача не найдена")
+    else:
+        raise ValueError("Задача не найдена")
+
+async def complete_task(session : AsyncSession, title : str):
+    task = await get_task(session, title)
+    if task[0].status == "done":
+        raise ValueError("Задача уже завершена")
+    await change_status(session, title)
