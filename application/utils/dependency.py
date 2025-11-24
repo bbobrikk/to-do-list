@@ -4,8 +4,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from application.core.connection import session
 
+
 async def get_session():
     async with session.begin() as sess:
         yield sess
+
 
 SessionDep = Annotated[AsyncSession, Depends(get_session)]

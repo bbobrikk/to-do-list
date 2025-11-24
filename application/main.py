@@ -6,7 +6,7 @@ from application.apies.task_apies import router
 
 
 @asynccontextmanager
-async def lifespan(app : FastAPI):
+async def lifespan(app: FastAPI):
 
     await setup_db()
 
