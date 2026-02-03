@@ -31,7 +31,7 @@ async def get_tasks(session: SessionDep):
         raise HTTPException(status_code=404, detail=str(er))
 
 
-@router.post("/create")
+@router.post("")
 async def add_task(session: SessionDep, task_data: CreateTask):
     try:
         await create_task(session, task_data)
@@ -40,7 +40,7 @@ async def add_task(session: SessionDep, task_data: CreateTask):
         raise HTTPException(status_code=404, detail=str(er))
 
 
-@router.delete("/delete")
+@router.delete("/{tittle}")
 async def del_task(session: SessionDep, tittle: str):
     try:
         await remove_task(session, tittle)
@@ -49,7 +49,7 @@ async def del_task(session: SessionDep, tittle: str):
         raise HTTPException(status_code=404, detail=str(er))
 
 
-@router.put("/{task}/complete")
+@router.put("/{tittle}")
 async def change_status(session: SessionDep, title: str):
     try:
         await complete_task(session, title)
