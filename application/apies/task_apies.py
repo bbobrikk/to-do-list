@@ -40,16 +40,16 @@ async def add_task(session: SessionDep, task_data: CreateTask):
         raise HTTPException(status_code=404, detail=str(er))
 
 
-@router.delete("/{tittle}")
-async def del_task(session: SessionDep, tittle: str):
+@router.delete("/{title}")
+async def del_task(session: SessionDep, title: str):
     try:
-        await remove_task(session, tittle)
+        await remove_task(session, title)
         return {"status": "Задача удалена"}
     except ValueError as er:
         raise HTTPException(status_code=404, detail=str(er))
 
 
-@router.put("/{tittle}")
+@router.put("/{title}")
 async def change_status(session: SessionDep, title: str):
     try:
         await complete_task(session, title)
