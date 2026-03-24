@@ -31,7 +31,7 @@ class TestTasks:
                 "deadline": date(year=2025, month=5, day=19).isoformat(),
                 "created_at": date(year=2025, month=5, day=1).isoformat(),
             }
-            await client.post("/tasks/create", json=task)
+            await client.post("tasks", json=task)
             response = await client.get("tasks")
             assert response.status_code == 200 and len(response.json()) == 4
 
@@ -39,7 +39,7 @@ class TestTasks:
         async with AsyncClient(
             transport=ASGITransport(app), base_url="http://test"
         ) as client:
-            await client.delete("/tasks/delete?tittle=test1")
+            await client.delete("/tasks/test1")
             response = await client.get("/tasks")
             assert response.status_code == 200 and len(response.json()) == 2
 
@@ -47,7 +47,7 @@ class TestTasks:
         async with AsyncClient(
             transport=ASGITransport(app), base_url="http://test"
         ) as client:
-            await client.put("/tasks/%7Btask%7D/complete?title=test2")
+            await client.put("/tasks/test2")
             response = await client.get("/tasks/test2")
             assert (
                 response.status_code == 200 and response.json()[0]["status"] == "done"
